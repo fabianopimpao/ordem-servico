@@ -1,5 +1,7 @@
 package me.pimpao.ordemservico.ui.model.request;
 
+import javax.validation.constraints.NotEmpty;
+
 public class OrdemServicoUpdateRequestModel {
 
     private String responsavel;

@@ -55,6 +55,11 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         if (ordemServicoEntity == null) {
             throw new ObjectNotFoundException("Ordem de serviço não encontrada!");
         }
+
+        if (ordemServicoUpdateDto.getResponsavel().isEmpty()) {
+            throw new ObjectNotFoundException("Responsável não foi informado!");
+        }
+
         ordemServicoEntity.setResponsavel(ordemServicoUpdateDto.getResponsavel());
         ordemServicoRepository.save(ordemServicoEntity);
     }
@@ -65,6 +70,11 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         if (ordemServicoEntity == null) {
             throw new ObjectNotFoundException("Ordem de serviço não encontrada!");
         }
+
+        if (ordemServicoUpdateDto.getResponsavel().isEmpty()) {
+            throw new ObjectNotFoundException("Responsável não foi informado!");
+        }
+
         ordemServicoEntity.setDataInicial(LocalDateTime.now());
         ordemServicoEntity.setStatus(StatusOrdem.EM_ANDAMENTO);
         ordemServicoRepository.save(ordemServicoEntity);
@@ -76,6 +86,11 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         if (ordemServicoEntity == null) {
             throw new ObjectNotFoundException("Ordem de serviço não encontrada!");
         }
+
+        if (ordemServicoUpdateDto.getResponsavel().isEmpty()) {
+            throw new ObjectNotFoundException("Responsável não foi informado!");
+        }
+
         ordemServicoEntity.setDataConclusao(LocalDateTime.now());
         ordemServicoEntity.setStatus(StatusOrdem.CONCLUIDA);
         ordemServicoRepository.save(ordemServicoEntity);
@@ -87,12 +102,21 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         if (ordemServicoEntity == null) {
             throw new ObjectNotFoundException("Ordem de serviço não encontrada!");
         }
+
+        if (ordemServicoUpdateDto.getResponsavel().isEmpty()) {
+            throw new ObjectNotFoundException("Responsável não foi informado!");
+        }
+
         ordemServicoEntity.setStatus(StatusOrdem.BLOQUEADA);
         ordemServicoRepository.save(ordemServicoEntity);
     }
 
     @Override
     public List<OrdemServicoResponseModel> consultarOrdensPendentesPorResponsavel(String responsavel) {
+        if (responsavel.isEmpty()) {
+            throw new ObjectNotFoundException("Responsável não foi informado!");
+        }
+
         List<OrdemServicoEntity> ordens = ordemServicoRepository.findByResponsavelAndStatus(responsavel, StatusOrdem.PENDENTE);
         return ordens.stream().map(OrdemServicoMapper::mapResponseModel).collect(Collectors.toList());
     }
