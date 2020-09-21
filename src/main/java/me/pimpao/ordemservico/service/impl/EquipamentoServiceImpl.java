@@ -6,6 +6,7 @@ import me.pimpao.ordemservico.io.entity.EquipamentoEntity;
 import me.pimpao.ordemservico.io.repository.ClienteRepository;
 import me.pimpao.ordemservico.io.repository.EquipamentoRepository;
 import me.pimpao.ordemservico.service.EquipamentoService;
+import me.pimpao.ordemservico.service.exception.ObjectNotFoundException;
 import me.pimpao.ordemservico.shared.util.EquipamentoMapper;
 import me.pimpao.ordemservico.ui.model.response.EquipamentoResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class EquipamentoServiceImpl implements EquipamentoService {
     @Override
     public EquipamentoResponseModel criar(EquipamentoDto equipamentoDto) {
         ClienteEntity clienteEntity = clienteRepository.findByClienteId(equipamentoDto.getClienteId());
+        if (clienteEntity == null) {
+            throw new ObjectNotFoundException("Cliente não encontrado!");
+        }
+
         EquipamentoEntity equipamentoEntity = EquipamentoMapper.mapEntity(equipamentoDto, clienteEntity);
         EquipamentoEntity novoEquipamento = equipamentoRepository.save(equipamentoEntity);
         return EquipamentoMapper.mapResponseModel(novoEquipamento);

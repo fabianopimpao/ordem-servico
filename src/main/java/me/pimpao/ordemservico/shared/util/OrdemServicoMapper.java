@@ -1,11 +1,13 @@
 package me.pimpao.ordemservico.shared.util;
 
 import me.pimpao.ordemservico.dto.OrdemServicoDto;
+import me.pimpao.ordemservico.dto.OrdemServicoUpdateDto;
 import me.pimpao.ordemservico.io.entity.ClienteEntity;
 import me.pimpao.ordemservico.io.entity.EquipamentoEntity;
 import me.pimpao.ordemservico.io.entity.OrdemServicoEntity;
 import me.pimpao.ordemservico.io.enumeration.StatusOrdem;
 import me.pimpao.ordemservico.ui.model.request.OrdemServicoRequestModel;
+import me.pimpao.ordemservico.ui.model.request.OrdemServicoUpdateRequestModel;
 import me.pimpao.ordemservico.ui.model.response.OrdemServicoResponseModel;
 
 import java.time.LocalDateTime;
@@ -37,13 +39,22 @@ public class OrdemServicoMapper {
     public static OrdemServicoResponseModel mapResponseModel(OrdemServicoEntity ordemServicoEntity) {
         OrdemServicoResponseModel ordemServicoResponseModel = new OrdemServicoResponseModel();
         ordemServicoResponseModel.setOrdemId(ordemServicoEntity.getOrdemId());
-        ordemServicoResponseModel.setDataCriacao(ordemServicoResponseModel.getDataCriacao());
+        ordemServicoResponseModel.setDataCriacao(ordemServicoEntity.getDataCriacao());
         ordemServicoResponseModel.setDataInicial(ordemServicoEntity.getDataInicial());
         ordemServicoResponseModel.setDataConclusao(ordemServicoEntity.getDataConclusao());
         ordemServicoResponseModel.setClienteId(ordemServicoEntity.getClienteEntity().getClienteId());
         ordemServicoResponseModel.setEquipamentoId(ordemServicoEntity.getEquipamentoEntity().getEquipamentoId());
+        ordemServicoResponseModel.setStatus(ordemServicoEntity.getStatus());
         ordemServicoResponseModel.setResponsavel(ordemServicoEntity.getResponsavel());
 
         return ordemServicoResponseModel;
+    }
+
+    public static OrdemServicoUpdateDto mapUpdateDto(String id, OrdemServicoUpdateRequestModel ordemServicoUpdateRequestModel) {
+        OrdemServicoUpdateDto ordemServicoUpdateDto = new OrdemServicoUpdateDto();
+        ordemServicoUpdateDto.setOrdemId(id);
+        ordemServicoUpdateDto.setResponsavel(ordemServicoUpdateRequestModel.getResponsavel());
+
+        return ordemServicoUpdateDto;
     }
 }

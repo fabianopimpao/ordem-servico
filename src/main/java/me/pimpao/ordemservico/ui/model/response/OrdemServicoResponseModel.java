@@ -1,5 +1,7 @@
 package me.pimpao.ordemservico.ui.model.response;
 
+import me.pimpao.ordemservico.io.enumeration.StatusOrdem;
+
 import java.time.LocalDateTime;
 
 public class OrdemServicoResponseModel {
@@ -10,6 +12,7 @@ public class OrdemServicoResponseModel {
     private LocalDateTime dataCriacao;
     private LocalDateTime dataInicial;
     private LocalDateTime dataConclusao;
+    private StatusOrdem status;
     private String responsavel;
 
     public String getOrdemId() {
@@ -58,6 +61,14 @@ public class OrdemServicoResponseModel {
 
     public void setDataConclusao(LocalDateTime dataConclusao) {
         this.dataConclusao = dataConclusao;
+    }
+
+    public StatusOrdem getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusOrdem status) {
+        this.status = status;
     }
 
     public String getResponsavel() {
